@@ -14,7 +14,7 @@ export default class OauthController {
    */
   async handleCallback (req, res, next) {
     try {
-      if (req.session.state !== req.query.state) next(createError(403))
+      if (req.session.state !== req.query.state) return next(createError(403))
 
       const urlOptions = {
         client_id: process.env.GITLAB_APPLICATION_ID,
@@ -50,7 +50,23 @@ export default class OauthController {
    */
   async getUser (req, res, next) {
     try {
-      console.log('UUUUSER')
+      const accessToken = req.session.auth.access_token
+      const gitlabUserApiUrl = 'https://gitlab.lnu.se/api/v4/user?access_token=' + accessToken
+      const res = await fetch(gitlabUserApiUrl)
+
+      if (res.status !== 200) return next(createError(403))
+
+      const response = await res.json()
+
+      req.session.user = {
+        id: response.id,
+        username: response.username,
+        name: response.name,
+        email: response.email,
+        avatar: response.avatar_url,
+        last_activity: response.last_activity_on
+      }
+      console.log(req.session.user)
     } catch (error) {
       next(error)
     }
