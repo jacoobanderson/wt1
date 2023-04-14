@@ -25,10 +25,11 @@ export default class IndexController {
   }
 
   /**
+   * Creates the gitlab url that is used to login and sends it to the view.
    *
-   * @param req
-   * @param res
-   * @param next
+   * @param {object} req  Express request object
+   * @param {object} res Express response object
+   * @param {Function} next Express next function
    */
   async createGitlabUrl (req, res, next) {
     const generatedState = nanoid()
