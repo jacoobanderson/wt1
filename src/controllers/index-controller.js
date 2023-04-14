@@ -34,6 +34,7 @@ export default class IndexController {
   async createGitlabUrl (req, res, next) {
     const generatedState = nanoid()
     req.session.state = generatedState
+
     try {
       const urlOptions = {
         client_id: process.env.GITLAB_APPLICATION_ID,

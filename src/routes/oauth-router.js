@@ -1,5 +1,4 @@
 import express from 'express'
-import createError from 'http-errors'
 import OauthController from '../controllers/oauth-controller.js'
 
 export const router = express.Router()

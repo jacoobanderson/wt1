@@ -33,7 +33,7 @@ try {
       saveUninitialized: false,
       cookie: {
         httpOnly: true,
-        secure: true,
+        secure: false,
         maxAge: 60 * 60 * 1000 * 2,
         sameSite: 'Lax'
       }
