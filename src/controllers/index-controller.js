@@ -1,4 +1,3 @@
-import createError from 'http-errors'
 import { nanoid } from 'nanoid'
 /**
  * Controller for homepage.
@@ -15,7 +14,7 @@ export default class IndexController {
     try {
       req.session.user ? res.redirect('/user/profile') : res.render('pages/home', { viewData: { gitlab_redirect_url: req.session.gitlab_url } })
     } catch (err) {
-      next(createError(500, err.message))
+      next(err)
     }
   }
 

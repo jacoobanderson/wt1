@@ -17,14 +17,21 @@ const indexController = new IndexController()
  */
 const checkToken = (req, res, next) => {
   try {
-    const token = req.session.auth
-    const createdAt = token.created_at
-    const expiresIn = token.expires_in
-    const currentTime = Math.floor(Date.now() / 1000)
-    const expirationTime = createdAt + expiresIn
+    if (req.session.auth) {
+      const token = req.session.auth
+      const createdAt = token.created_at
+      const expiresIn = token.expires_in
+      const currentTime = Math.floor(Date.now() / 1000)
+      const expirationTime = createdAt + expiresIn
 
-    if (currentTime >= expirationTime) {
-      res.redirect('/oauth/refresh')
+      console.log(currentTime)
+      console.log(expirationTime)
+
+      if (currentTime >= expirationTime) {
+        res.redirect('/oauth/refresh')
+      } else {
+        next()
+    }
     }
   } catch (error) {
     next(error)
