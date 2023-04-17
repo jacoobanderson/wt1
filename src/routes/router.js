@@ -8,8 +8,31 @@ export const router = express.Router()
 
 const indexController = new IndexController()
 
+/**
+ * Checks if the token needs to be refreshed.
+ *
+ * @param {object} req  Express request object
+ * @param {object} res Express response object
+ * @param {Function} next Express next function
+ */
+const checkToken = (req, res, next) => {
+  try {
+    const token = req.session.auth
+    const createdAt = token.created_at
+    const expiresIn = token.expires_in
+    const currentTime = Math.floor(Date.now() / 1000)
+    const expirationTime = createdAt + expiresIn
+
+    if (currentTime >= expirationTime) {
+      res.redirect('/oauth/refresh')
+    }
+  } catch (error) {
+    next(error)
+  }
+}
+
 router.use('/oauth', oauthRouter)
-router.use('/user', userRouter)
+router.use('/user', checkToken, userRouter)
 
 router.get('/', indexController.createGitlabUrl, indexController.showHomePage)
 router.use('*', (req, res, next) => next(createError(404)))
