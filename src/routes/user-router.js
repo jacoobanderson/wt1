@@ -6,3 +6,4 @@ export const router = express.Router()
 const userController = new UserController()
 
 router.get('/profile', userController.renderUserProfile)
+router.get('/activities', userController.renderActivities)

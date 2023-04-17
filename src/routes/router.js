@@ -31,7 +31,7 @@ const checkToken = (req, res, next) => {
         res.redirect('/oauth/refresh')
       } else {
         next()
-    }
+      }
     }
   } catch (error) {
     next(error)
