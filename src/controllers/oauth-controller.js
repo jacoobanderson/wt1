@@ -24,7 +24,9 @@ export default class OauthController {
         client_secret: process.env.GITLAB_SECRET
       }
 
-      const gitlabTokenUrl = process.env.GITLAB_TOKEN_URL + new URLSearchParams(urlOptions).toString()
+      const gitlabTokenUrl =
+        process.env.GITLAB_TOKEN_URL +
+        new URLSearchParams(urlOptions).toString()
 
       const response = await fetch(gitlabTokenUrl, {
         method: 'POST',
@@ -51,7 +53,8 @@ export default class OauthController {
   async getUser (req, res, next) {
     try {
       const accessToken = req.session.auth.access_token
-      const gitlabUserApiUrl = 'https://gitlab.lnu.se/api/v4/user?access_token=' + accessToken
+      const gitlabUserApiUrl =
+        'https://gitlab.lnu.se/api/v4/user?access_token=' + accessToken
       const res = await fetch(gitlabUserApiUrl)
 
       if (res.status !== 200) return next(createError(403))
@@ -66,7 +69,6 @@ export default class OauthController {
         avatar: response.avatar_url,
         last_activity: response.last_activity_on
       }
-      console.log(req.session.user)
     } catch (error) {
       next(error)
     }
@@ -81,7 +83,41 @@ export default class OauthController {
    * @param {Function} next Express next function
    */
   async redirectToProfile (req, res, next) {
-    console.log('REEEEEENDER')
     res.redirect('/user/profile')
+  }
+
+  /**
+   * Redirects the user to the profile.
+   *
+   * @param {object} req  Express request object
+   * @param {object} res Express response object
+   * @param {Function} next Express next function
+   */
+  async refresh (req, res, next) {
+    try {
+      const urlOptions = {
+        client_id: process.env.GITLAB_APPLICATION_ID,
+        refresh_token: req.session.auth.refresh_token,
+        grant_type: 'refresh_token',
+        redirect_uri: process.env.GITLAB_CALLBACK_URL,
+        client_secret: process.env.GITLAB_SECRET
+      }
+
+      const gitlabTokenUrl =
+            process.env.GITLAB_TOKEN_URL +
+            new URLSearchParams(urlOptions).toString()
+
+      const response = await fetch(gitlabTokenUrl, {
+        method: 'POST',
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      req.session.auth = await response.json()
+    } catch (error) {
+      next(error)
+    }
   }
 }
