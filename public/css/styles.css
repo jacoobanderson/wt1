@@ -1,0 +1,51 @@
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+main {
+    height: 100%;
+    width: 100%;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.inner-container-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-button button {
+    width: 125px;
+    height: 45px;
+}
+
+.navbar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    gap: 100px;
+}
+
+.activity {
+    background-color:seagreen;
+    padding: 15px;
+    margin: 10px;
+}

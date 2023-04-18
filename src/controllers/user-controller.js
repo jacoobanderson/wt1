@@ -30,6 +30,7 @@ export default class UserController {
       const amountOfActivities = 101
       const amountOfFetches = Math.ceil(amountOfActivities / perPage)
       const accessToken = req.session.auth.access_token
+      const user = req.session.user
       const activities = []
       let activityCount = 0
 
@@ -51,7 +52,8 @@ export default class UserController {
         }
       }
       console.log(activities.length)
-      res.render('pages/activities', { activities })
+      console.log(req.session.user)
+      res.render('pages/activities', { activities, user })
     } catch (error) {
       next(error)
     }
