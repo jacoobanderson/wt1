@@ -7,3 +7,4 @@ const oauthController = new OauthController()
 
 router.get('/callback', oauthController.handleCallback, oauthController.getUser, oauthController.redirectToProfile)
 router.get('/refresh', oauthController.refresh, oauthController.redirectToProfile)
+router.get('/revoke', oauthController.revoke)

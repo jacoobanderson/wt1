@@ -51,8 +51,6 @@ export default class UserController {
           activityCount++
         }
       }
-      console.log(activities.length)
-      console.log(req.session.user)
       res.render('pages/activities', { activities, user })
     } catch (error) {
       next(error)

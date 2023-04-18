@@ -120,4 +120,41 @@ export default class OauthController {
       next(error)
     }
   }
+
+  /**
+   * Revokes the token.
+   *
+   * @param {object} req  Express request object
+   * @param {object} res Express response object
+   * @param {Function} next Express next function
+   */
+  async revoke (req, res, next) {
+    try {
+      const urlOptions = {
+        client_id: process.env.GITLAB_APPLICATION_ID,
+        client_secret: process.env.GITLAB_SECRET,
+        token: req.session.auth.access_token
+      }
+
+      const gitlabTokenUrl =
+                process.env.GITLAB_REVOKE_URL +
+                new URLSearchParams(urlOptions).toString()
+
+      await fetch(gitlabTokenUrl, {
+        method: 'POST',
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      req.session.destroy((error) => {
+        if (error) return next(error)
+        res.redirect('/')
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
 }
