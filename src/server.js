@@ -41,6 +41,7 @@ try {
   app.set('layout', join(directoryFullName, 'views', 'layouts', 'default'))
   app.use(express.static(join(directoryFullName, '..', 'public')))
 
+  app.set('trust proxy', 1)
   app.use(
     session({
       secret: process.env.SESSION_SECRET,
@@ -91,7 +92,7 @@ try {
   })
 
   // Starts the HTTP server listening for connections.
-  app.listen(process.env.PORT, () => {
+  app.listen(process.env.PORT || 8080, () => {
     console.log(`Server running at http://localhost:${process.env.PORT}`)
     console.log('Press Ctrl-C to terminate...')
   })
