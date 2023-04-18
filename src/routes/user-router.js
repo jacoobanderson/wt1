@@ -7,3 +7,4 @@ const userController = new UserController()
 
 router.get('/profile', userController.renderUserProfile)
 router.get('/activities', userController.renderActivities)
+router.get('/projects', userController.renderGroups)

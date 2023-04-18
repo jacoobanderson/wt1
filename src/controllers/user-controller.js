@@ -1,5 +1,6 @@
 import createError from 'http-errors'
 import fetch from 'node-fetch'
+import { getGroups } from '../utils/groupRequests.js'
 
 /**
  * Controller for homepage.
@@ -55,5 +56,20 @@ export default class UserController {
     } catch (error) {
       next(error)
     }
+  }
+
+  /**
+   * Renders the groups, subgroups and projects.
+   *
+   * @param {object} req  Express request object
+   * @param {object} res Express response object
+   * @param {Function} next Express next function
+   */
+  async renderGroups (req, res, next) {
+    const accessToken = req.session.auth.access_token
+    const user = req.session.user
+    const groups = await getGroups(3, accessToken)
+
+    console.log(groups)
   }
 }
