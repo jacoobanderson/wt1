@@ -43,16 +43,17 @@ export default class UserController {
         for (let j = 0; activityCount < amountOfActivities && j < response.length; j++) {
           activities.push({
             action_name: response[j].action_name,
-            target_type: response[j].target_type,
-            target_title: response[j].target_title,
+            target_type: response[j].target_type ? response[j].target_type : response[j].push_data.ref_type,
+            target_title: response[j].target_title ? response[j].target_title : response[j].push_data.commit_title,
             created_at: response[j].created_at
           })
           activityCount++
         }
       }
+      console.log(activities.length)
+      res.render('pages/activities', { activities })
     } catch (error) {
       next(error)
     }
-    next()
   }
 }

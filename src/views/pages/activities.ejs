@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="inner-container">
+    <h1>Activities</h1>
+    <% for (let i = 0; i < activities.length; i++) {%>
+    <div class="activity">
+      <h3>Action: <%= activities[i].action_name %></h3>
+      <h3>Target Type: <%= activities[i].target_type %></h3>
+      <h3>Target Title: <%= activities[i].target_title %></h3>
+      <h3>Created At: <%= activities[i].created_at %></h3>
+    </div>
+    <% } %>
+  </div>
+</div>
