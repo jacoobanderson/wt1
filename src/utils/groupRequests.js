@@ -27,5 +27,14 @@ export const getProjects = async (groups, accessToken) => {
     projects.push(await response.json())
   }
 
+  // Gets the latest commit and adds to the project
+  for (let i = 0; i < projects.length; i++) {
+    for (let j = 0; j < projects[i].length; j++) {
+      const gitlabProjectCommits =
+        'https://gitlab.lnu.se/api/v4/projects/' + projects[i][j].id + '/repository/commits' + '?access_token=' + accessToken + '&per_page=1'
+      const response = await fetch(gitlabProjectCommits)
+      projects[i][j].commit = await response.json()
+    }
+  }
   return projects
 }

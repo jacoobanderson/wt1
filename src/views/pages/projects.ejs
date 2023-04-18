@@ -15,7 +15,14 @@
             <h5>Project name: <%= projects[i][j].name %></h5>
             <h5>Project link: <%= projects[i][j].web_url %></h5>
             <h5>Path: <%= projects[i][j].path %></h5>
-            <h5>COMMIT</h5>
+            <% if (projects[i][j].commit[0]) { %>
+            <div>
+                <h5>Commit: </h5>
+                <p>Commit date: <%= projects[i][j].commit[0].authored_date %></p>
+                <p>Author: <%= projects[i][j].commit[0].author_name %></p>
+                <p>Username: <%= projects[i][j].commit[0].committer_name %></p>
+            </div>
+            <% } %>
             <% if (projects[i][j].avatar_url) { %>
             <img src="<%= projects[i][j].avatar_url %>" style="width: 50px; height: 50px;" alt="avatar" class="avatar">
             <% } %>
