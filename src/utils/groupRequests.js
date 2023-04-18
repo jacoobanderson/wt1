@@ -26,11 +26,6 @@ export const getProjects = async (groups, accessToken) => {
     const response = await fetch(gitlabGroupApiUrl)
     projects.push(await response.json())
   }
-//   console.log(projects)
-//   console.log('LENGTHHHH OF PROJECTS' + ' ' + projects.length)
-//   console.log('LENGTH ' + projects[0][0].id)
-//   console.log('LENGTH ' + projects[1][0].id)
-//   console.log('LENGTH ' + projects[2][0])
 
   return projects
 }
