@@ -1,6 +1,6 @@
 import createError from 'http-errors'
 import fetch from 'node-fetch'
-import { getGroups } from '../utils/groupRequests.js'
+import { getGroups, getProjects } from '../utils/groupRequests.js'
 
 /**
  * Controller for homepage.
@@ -69,7 +69,12 @@ export default class UserController {
     const accessToken = req.session.auth.access_token
     const user = req.session.user
     const groups = await getGroups(3, accessToken)
+    // const subGroups = await getSubGroups(groups, accessToken)
+    const projects = await getProjects(groups, accessToken)
 
-    console.log(groups)
+    res.render('pages/projects', { groups, projects, user })
+    // console.log(projects)
+    // console.log(groups)
+    // console.log('SUBGROUUUUUUUUPSSSS' + subGroups)
   }
 }

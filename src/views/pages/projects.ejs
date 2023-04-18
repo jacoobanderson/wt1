@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="inner-container">
+      <h1>Groups and projects</h1>
+      <% for (let i = 0; i < projects.length; i++) {%>
+      <div class="group">
+        <h3>Group name: <%= groups[i].name %></h3>
+        <h3>URL: <%= groups[i].web_url %></h3>
+        <img src="<%= groups[i].avatar_url %>" alt="avatar" class="avatar">
+      </div>
+      <% } %>
+    </div>
+  </div>
+  
