@@ -48,7 +48,7 @@ try {
       saveUninitialized: false,
       cookie: {
         httpOnly: true,
-        secure: false,
+        secure: true,
         maxAge: 60 * 60 * 1000 * 2,
         sameSite: 'Lax'
       }
